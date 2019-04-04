@@ -32,11 +32,16 @@ export default class App extends Component < Props > {
     this.state = {
       firstName: null,
       lastName: null,
+      firstNameValue: null,
+      lastNameValue: null,
       dateOfBirth: null,
       phone: null
     }
   }
 
+  lastName = React.createRef();
+  dateOfBirth = React.createRef();
+  phone = React.createRef();
 
   render() {
   
@@ -72,7 +77,7 @@ export default class App extends Component < Props > {
         }
       }
       value = {
-        this.state.firstName
+        this.state.firstNameValue
       }
       keyboardType = 'default'
       returnKeyType = 'next'
@@ -80,16 +85,16 @@ export default class App extends Component < Props > {
         false
       }
       autoCapitalize = 'words'
-      onChangeText = {(value) => this.setState({firstName: value})}
-      onSubmitEditing = {(event) => {this.refs.lastName.focus() }
+      onChangeText = {(value) => this.setState({firstNameValue: value})}
+      onSubmitEditing = {(event) => {this.lastName.current.focus() }
       }
       />
 </View>
 <View style={{flex:1}}>
       <TextInput mode = "outlined"
-      ref = 'lastName'
+      ref = {this.lastName}
       value = {
-        this.state.lastName
+        this.state.lastNameValue
       }
       style = {
         {
@@ -111,18 +116,18 @@ export default class App extends Component < Props > {
       keyboardType = 'default'
       returnKeyType = 'next'
       autoCapitalize = 'words'
-      onChangeText = {(value) => this.setState({lastName: value})}
-      onSubmitEditing = {(event) => {this.refs.dateofBirth.focus()}}
+      onChangeText = {(value) => this.setState({lastNameValue: value})}
+      onSubmitEditing = {(event) => {this.dateOfBirth.current.getElement().focus()}}
       /> 
       </View>
       <View style={{flex:1}}>
       
                   <TextInput 
                 mode="outlined"
-                    ref='dateofBirth'
                     render={props =>
                       <TextInputMask
                         {...props}
+                        ref={this.dateOfBirth}
                         type={'custom'}
                         options={{
                           mask: "99/99/9999"
@@ -151,12 +156,12 @@ export default class App extends Component < Props > {
                     keyboardType='phone-pad'
                     returnKeyType='done'
                     onChangeText={(value) => this.setState({dateOfBirth: value})}
-                    onSubmitEditing={(event) => { this.refs.phone.focus() }}
+                    onSubmitEditing={(event) => { this.phone.current.focus() }}
                   />
           </View>
           <View style={{flex:1}}>
                 <TextInput mode="outlined"
-                ref='phone'
+                ref={this.phone}
                 label="Phone Number"
                 theme={{
                   colors: {
@@ -180,39 +185,3 @@ export default class App extends Component < Props > {
   }
 }
 
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: (Platform.OS == 'ios') ? 20 : 0
-  },
-
-  animatedHeader: {
-    position: 'absolute',
-    top: (Platform.OS == 'ios') ? 20 : 0,
-    left: 0,
-    right: 0,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  headerText: {
-    color: 'white',
-    fontSize: 22
-  },
-
-  item: {
-    backgroundColor: '#E0E0E0',
-    margin: 8,
-    height: 45,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  itemText: {
-    color: 'black',
-    fontSize: 16
-  }
-});
